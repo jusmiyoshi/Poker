@@ -37,15 +37,13 @@ public class Game {
 
     }
 
-    //deck shuffle
-    static void shuffle(Card[] arr)
-    {
+    static void shuffle(Card[] card) {
         Random r = new Random();
-        for (int i = 52 -1; i > 0; i--) {
-            int j = r.nextInt(i+1);
-            Card tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
+        for (int i = 52 - 1; i > 0; i--) {
+            int j = r.nextInt(i + 1);
+            Card tmp = card[i];
+            card[i] = card[j];
+            card[j] = tmp;
         }
     }
 
@@ -280,6 +278,5 @@ public class Game {
         }
 
     }
-
 
 }
