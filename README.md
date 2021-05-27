@@ -1,3 +1,3 @@
 # Poker
-Standard Poker game with a GUI<br/>
+Texas Hold'em Poker <br/>
 I was here, as always
