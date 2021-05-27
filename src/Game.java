@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Game {
     // 0 = Tournament Game
     // 1 = Cash Game
@@ -14,9 +16,22 @@ public class Game {
 
     public static void main(String[] args) {
         Deck deck1 = new Deck();
+        shuffle(deck1.deck, 52);
         for(int i = 0; i < 52; i++)
         {
             System.out.println(deck1.deck[i].getSuit() + "" + deck1.deck[i].getNumber());
+        }
+    }
+
+    //deck shuffle
+    static void shuffle( Card[] arr, int n)
+    {
+        Random r = new Random();
+        for (int i = n-1; i > 0; i--) {
+            int j = r.nextInt(i+1);
+            Card tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
         }
     }
 
@@ -67,6 +82,5 @@ public class Game {
             return tmp;
         }
     }
-
 
 }
