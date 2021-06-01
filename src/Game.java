@@ -18,21 +18,22 @@ public class Game {
     public static void main(String[] args) {
 
         Deck deck1 = new Deck();
-        shuffle(deck1.deck);
+        shuffle(deck1.getDeck());
 
-        /* CARD SHUFFLE + CHECK
+        // CARD SHUFFLE + CHECK
+        /*
         for(int i = 0; i < 52; i++)
         {
-            System.out.println(deck1.deck[i].getSuit() + "" + deck1.deck[i].getNumber());
-        }*/
-
+            System.out.println(deck1.getDeck()[i].getSuit() + "" + deck1.getDeck()[i].getNumber());
+        }
+        */
         // BLACKJACK CHECK
         Player player1 = new Player(1000);
         boolean cont;
         do {
             cont = blackJack(player1, deck1);
             player1.clearHand();
-            shuffle(deck1.deck);
+            shuffle(deck1.getDeck());
         }while (cont && (player1.getChips() > 0));
 
     }
@@ -68,7 +69,7 @@ public class Game {
                 System.out.println("Player: " + player.getHand()[player.getCardCount() - 1].getSuit() + "" + player.getHand()[player.getCardCount() - 1].getNumber() + " ");
             }
             dealer[dealerDealt] = deck.dealCard();
-            dealerScore += dealer[dealerDealt].number;
+            dealerScore += dealer[dealerDealt].getNumber();
             if(dealerDealt == 0){
                 System.out.println("Dealer: **\n");
             }
@@ -117,30 +118,29 @@ public class Game {
         while(dealerScore < 17)
         {
             dealer[dealerDealt] = deck.dealCard();
-            dealerScore += dealer[dealerDealt].number;
+            dealerScore += dealer[dealerDealt].getNumber();
             dealerDealt++;
         }
 
-        int check = winCheck(player,dealerScore);
-        switch(check){
-            case 1:
-                player.updateChips(bet);
-                break;
-            case 2:
-                player.updateChips(bet*2);
-                break;
-            default:
-                break;
-        }
-
-       playerC = player.getHand();
+        playerC = player.getHand();
         printOut(player, playerC);
         for(int j = 0; j < dealerDealt; j++) {
             System.out.print(dealer[j].getSuit() + "" + dealer[j].getNumber() + " ");
        }
-       System.out.println("\nDealer Score: " + dealerScore + "\n");
+        System.out.println("\nDealer Score: " + dealerScore + "\n");
 
-
+        int check = winCheck(player,dealerScore);
+        switch (check) {
+            case 1 -> {
+                System.out.println("Draw!");
+                player.updateChips(bet);
+            }
+            case 2 -> {
+                System.out.println("Player Wins!");
+                player.updateChips(bet * 2);
+            }
+            default -> System.out.println("Player Loses!");
+        }
 
         System.out.println("Current Chip Count:" + player.getChips() + "\n" + "Keep Playing? (Y/N): ");
         char cont = scan.next().charAt(0);
@@ -183,100 +183,6 @@ public class Game {
             outp = 0;
         }
         return outp;
-    }
-
-    public static class Deck extends Card {
-        private final Card[] deck;
-        private int cardsDealt = 0;
-        public Deck(){
-            deck = new Card[52];
-            int i = 0;
-            for(int j = 0; j < 4; j++) {
-                for (int k = 1; k <= 13; k++) {
-                    deck[i] = new Card(k, j);
-                    i++;
-                }
-            }
-        }
-
-        public Card dealCard(){
-            return deck[cardsDealt++];
-        }
-
-    }
-
-    static class Card {
-        // A = 1 (+13 when checking values)
-        // K = 13
-        // Q = 12
-        // J = 11
-        // H = 0 D = 1 S = 2 C = 3
-        private int number;
-        private int suit;
-        Card(){
-        }
-        public Card(int number, int suit)
-        {
-            this.number = number;
-            this.suit = suit;
-        }
-
-        public int getNumber(){
-            //print AKQJ instead of numbers
-            return number;
-        }
-
-        public char getSuit(){
-            char tmp = ' ';
-            switch (suit) {
-                case 0 -> tmp = 'H';
-                case 1 -> tmp = 'D';
-                case 2 -> tmp = 'S';
-                case 3 -> tmp = 'C';
-            }
-            return tmp;
-        }
-    }
-
-    public static class Player extends Card {
-        //Set to 2 for POKER
-        private Card[] hand = new Card[50];
-        private int cardCount = 0;
-        private int chipStack;
-        private int playerScore = 0;
-        public Player(int chipStack){
-            this.chipStack = chipStack;
-        }
-
-        public void updateChips(int chips){
-            chipStack += chips;
-        }
-
-        public void addToHand(Card c){
-            hand[cardCount] = c;
-            playerScore += c.getNumber();
-            cardCount++;
-        }
-
-        public void clearHand(){
-            hand = new Card[50];
-            cardCount = 0;
-            playerScore = 0;
-        }
-
-        public int getChips(){
-            return chipStack;
-        }
-        public Card[] getHand(){
-            return hand;
-        }
-        public int getPlayerScore(){
-            return playerScore;
-        }
-        public int getCardCount(){
-            return cardCount;
-        }
-
     }
 
 }
