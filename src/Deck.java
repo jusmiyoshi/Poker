@@ -1,6 +1,9 @@
 public class Deck {
+
     private final Card[] deck;
     private int cardsDealt = 0;
+
+    //Constructor
     public Deck(){
         deck = new Card[52];
         int i = 0;
@@ -12,10 +15,12 @@ public class Deck {
         }
     }
 
+    //Update Method
     public Card dealCard(){
         return deck[cardsDealt++];
     }
 
+    //Get Method
     public Card[] getDeck(){
         return deck;
     }

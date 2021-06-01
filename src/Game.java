@@ -6,6 +6,8 @@ public class Game {
     // 1 = Cash Game
     // 2 = BlackJack (Testing Only)
     private final int format;
+
+    //Game Constructor
     public Game(String format) {
         switch (format) {
             case "Cash", "cash" -> this.format = 1;
@@ -15,6 +17,7 @@ public class Game {
         }
     }
 
+    //Main Method
     public static void main(String[] args) {
 
         Deck deck1 = new Deck();
@@ -38,16 +41,7 @@ public class Game {
 
     }
 
-    static void shuffle(Card[] card) {
-        Random r = new Random();
-        for (int i = 52 - 1; i > 0; i--) {
-            int j = r.nextInt(i + 1);
-            Card tmp = card[i];
-            card[i] = card[j];
-            card[j] = tmp;
-        }
-    }
-
+    //Game Methods
     static boolean blackJack(Player player, Deck deck){
         Scanner scan = new Scanner(System.in);
         System.out.println("Current Chip Count:" + player.getChips() + "\n" + "Input Bet: ");
@@ -148,6 +142,7 @@ public class Game {
 
     }
 
+    //Methods
     private static void printOut(Player player, Card[] playerC) {
         System.out.println("----------------------------------------------------");
         System.out.print("Player Cards:");
@@ -183,6 +178,16 @@ public class Game {
             outp = 0;
         }
         return outp;
+    }
+
+    static void shuffle(Card[] card) {
+        Random r = new Random();
+        for (int i = 52 - 1; i > 0; i--) {
+            int j = r.nextInt(i + 1);
+            Card tmp = card[i];
+            card[i] = card[j];
+            card[j] = tmp;
+        }
     }
 
 }

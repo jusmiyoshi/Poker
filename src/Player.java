@@ -1,13 +1,16 @@
 public class Player {
-    //Set to 2 for POKER
+    //Set to size "2" Array for POKER
     private Card[] hand = new Card[50];
     private int cardCount = 0;
     private int chipStack;
     private int playerScore = 0;
+
+    //Constructor
     public Player(int chipStack){
         this.chipStack = chipStack;
     }
 
+    //Update/Change Methods
     public void updateChips(int chips){
         chipStack += chips;
     }
@@ -24,6 +27,7 @@ public class Player {
         playerScore = 0;
     }
 
+    //Get Methods
     public int getChips(){
         return chipStack;
     }
